@@ -584,11 +584,7 @@
 					} );
 				}
 
-				$( '#swipebox-close' ).bind( action, function( event ) {
-					//some androids fire touchend and 300ms later a click event. here we remember when swipebox was closed, in order to ignore the click that hits the content behind the swipebox's x
-				  window.closedSwipeboxAt = new Date().getTime();	
-					event.preventDefault();
-					event.stopPropagation();
+				$( '#swipebox-close' ).bind( action, function() {
 					$this.closeSlide();
 				} );
 			},
