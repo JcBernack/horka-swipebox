@@ -1,21 +1,38 @@
-swipebox-meteor
+meteor-swipebox
 ===============
 
-Swipebox image viewer plugin for Meteor. 
-(Swipebox is a responsive image viewer lightbox, that also works perfectly on mobile devices.) 
-This package is using the original [swipebox plugin](https://github.com/brutaldesign/swipebox).
+[Swipebox](http://brutaldesign.github.io/swipebox/) is a jQuery "lightbox" plugin for desktop, mobile and tablet. This package bundles it for Meteor.
 
-[Demo](http://brutaldesign.github.io/swipebox/)
+     meteor add jcbernack:swipebox
 
-#Install
+# Usage
 
-Installing is really straightforward, just add it to your meteor app, and you can use it right away.
+Add anchor elements to your page with links to the images, select them via jQuery and call `.swipebox()` on them.
 
-`meteor add horka:swipebox`
+Example:
 
-#Usage
-After installation just add the class `.swipebox` to the links you would like to open via Swipebox. 
+    <a href="/url/to/image" target="_blank" title="caption of the image" class="swipebox">
+      <img src="/url/to/thumbnail">
+    </a>
+    ...
+    $(".swipebox").swipebox();
 
-An example:
-`<a href="<image-url>" class="swipebox" title="<image-title>"><img src="<image-url>" alt="..."></a>`
-The title attribute of the link will appear in the lightbox.
+If you're using Meteors default templating engine (Blaze), the call to `.swipebox()` should be in the `onRendered()` event of the template:
+   
+    <template name="gallery">
+      {{#each images}}
+        <a href="{{url}}" target="_blank" title="{{caption}}" class="swipebox">
+          <img src="{{thumbnail}}">
+        </a>     
+      {{/each}}
+    </template>
+
+    Template.onRendered(function () {
+      $(".swipebox").swipebox();
+    });
+
+    Template.gallery.helpers({
+      images: function () {
+        return Images.find();
+      }
+    });
